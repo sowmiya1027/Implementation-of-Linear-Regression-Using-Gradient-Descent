@@ -9,10 +9,10 @@ To write a program to predict the profit of a city using the linear regression m
 
 ## Algorithm
 ```
-1. Initialize the parameters (m) and (b) and choose a learning rate (\alpha).
-2.Compute the predicted output (\hat{y} = mx + b) for all data points.
-3.Calculate the gradients of the cost function with respect to (m) and (b).
-4.Update (m) and (b) using gradient descent and repeat until convergence.
+1.Import the required library and read the dataframe.
+2.Write a function computeCost to generate the cost function.
+3.Perform iterations og gradient steps with learning rate.
+4.Plot the Cost function using Gradient Descent and generate the required graph.
 ```
 
 ## Program:
