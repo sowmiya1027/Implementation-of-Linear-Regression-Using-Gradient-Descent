@@ -9,10 +9,11 @@ To write a program to predict the profit of a city using the linear regression m
 
 ## Algorithm
 ```
-1.Import the required library and read the dataframe.
-2.Write a function computeCost to generate the cost function.
-3.Perform iterations og gradient steps with learning rate.
-4.Plot the Cost function using Gradient Descent and generate the required graph.
+1.Initialize the parameters (m) and (b) and choose a learning rate (\alpha).
+2.Compute the predicted output (\hat{y} = mx + b) for all data points.
+3.Calculate the gradients of the cost function with respect to (m) and (b).
+4.Update (m) and (b) using gradient descent and repeat until convergence.
+
 ```
 
 ## Program:
@@ -23,63 +24,39 @@ Developed by: Sowmiya R
 RegisterNumber: 212225040420 
 */
 
-
-import pandas as pd
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
-
-data=pd.read_csv("50_Startups.csv")
-x=data["R&D Spend"].values
-y=data["Profit"].values
-
-x_mean=np.mean(x)
-x_std=np.std(x)
-x=(x-x_mean)/x_std
-
-w=0.0
-b=0.0
-alpha=0.01
-epochs=100
-n=len(x)
-
-losses=[]
-
+data = pd.read_csv("Startup.csv")
+X = data['R&D Spend'].values
+y = data['Profit'].values
+X = (X - X.mean()) / X.std()
+m = 0
+b = 0
+learning_rate = 0.01
+epochs = 1000
+n = len(X)
 for i in range(epochs):
-    y_hat=w*x+b
-    loss=np.mean((y_hat-y)**2)
-    losses.append(loss)
-    
-    dw=(2/n)*np.sum((y_hat-y)*x)
-    db=(2/n)*np.sum(y_hat-y)
-    
-    w-=alpha*dw
-    b-=alpha*db
-
-plt.figure(figsize=(12,5))
-
-plt.subplot(1,2,1)
-plt.plot(losses)
-plt.xlabel("Iterations")
-plt.ylabel("Loss(MSE)")
-plt.title("Loss vs Iterations")
-
-plt.subplot(1,2,2)
-plt.scatter(x,y)
-x_sorted=np.argsort(x)
-plt.plot(x[x_sorted],(w*x+b)[x_sorted],color="red")
-plt.xlabel("R&D Spend (scaled)")
+    y_pred = m * X + b
+    dm = (-2/n) * np.sum(X * (y - y_pred))
+    db = (-2/n) * np.sum(y - y_pred)
+    m = m - learning_rate * dm
+    b = b - learning_rate * db
+print("Slope (m):", m)
+print("Intercept (b):", b)
+y_pred = m * X + b
+plt.scatter(X, y)
+plt.plot(X, y_pred)
+plt.xlabel("R&D Spend (Normalized)")
 plt.ylabel("Profit")
-plt.title("Linear Regression Fit")
-plt.tight_layout()
+plt.title("Gradient Descent on 50_Startups Dataset")
 plt.show()
 
-print(f"Final weight (w): {w}")
-print(f"Final bias (b): {b}")
+
 ```
 
 ## Output:
-<img width="1385" height="600" alt="image" src="https://github.com/user-attachments/assets/f1dfbf5d-68c2-4227-af8b-865bc88f286c" />
-
+<img width="756" height="537" alt="image" src="https://github.com/user-attachments/assets/e70a4828-206c-4288-988e-2b376b80b79d" />
 
 
 ## Result:
